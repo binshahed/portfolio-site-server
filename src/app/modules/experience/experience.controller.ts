@@ -16,7 +16,7 @@ const createExperience = catchAsync(async (req, res) => {
 
 // get all experiences
 const getAllExperience = catchAsync(async (req, res) => {
-  const result = await experienceService.getAllExperiences(req.query);
+  const result = await experienceService.getAllExperiences();
 
   sendResponse(res, {
     success: true,

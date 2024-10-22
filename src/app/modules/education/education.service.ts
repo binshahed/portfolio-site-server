@@ -3,49 +3,49 @@ import { TEducation } from './education.interface';
 import { EducationModel } from './education.model';
 
 const createEducation = async (payLoad: TEducation) => {
-  const service = await EducationModel.create(payLoad);
-  if (!service) {
+  const education = await EducationModel.create(payLoad);
+  if (!education) {
     throw new AppError(400, 'Education is not created');
   }
-  return service;
+  return education;
 };
 
 const getAllEducations = async () => {
-  const services = await EducationModel.find().sort({ createdAt: -1 });
+  const educations = await EducationModel.find().sort({ createdAt: -1 });
 
-  return services;
+  return educations;
 };
 
 const getEducationById = async (id: string) => {
-  const service = await EducationModel.findById(id);
+  const education = await EducationModel.findById(id);
 
-  // checking is service is available
-  if (!service) {
+  // checking is education is available
+  if (!education) {
     throw new AppError(404, 'Education not found!');
   }
-  return service;
+  return education;
 };
 
 const updateEducationById = async (
   id: string,
   payLoad: Partial<TEducation>,
 ) => {
-  const service = await EducationModel.findByIdAndUpdate(id, payLoad, {
+  const education = await EducationModel.findByIdAndUpdate(id, payLoad, {
     new: true,
   });
 
-  // checking is service is available
-  if (!service) {
+  // checking is education is available
+  if (!education) {
     throw new AppError(404, 'Education not found!');
   }
-  return service;
+  return education;
 };
 
 const deleteEducationById = async (id: string) => {
-  const service = await EducationModel.findById(id);
+  const education = await EducationModel.findById(id);
 
-  // checking is service is available
-  if (!service) {
+  // checking is education is available
+  if (!education) {
     throw new AppError(404, 'Education not found!');
   }
 

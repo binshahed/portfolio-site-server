@@ -2,7 +2,7 @@ import AppError from '../../errors/AppError';
 import { TExperience } from './experience.interface';
 import { ExperienceModel } from './experience.model';
 
-import { QueryBuilder } from '../../builder/QueryBuilder';
+
 
 const createExperience = async (payLoad: TExperience) => {
   const service = await ExperienceModel.create(payLoad);
@@ -12,27 +12,10 @@ const createExperience = async (payLoad: TExperience) => {
   return service;
 };
 
-const getAllExperiences = async (query: Record<string, unknown>) => {
-  const services = new QueryBuilder(
-    ExperienceModel.find({ isDeleted: { $ne: true } }),
-    query,
-  )
-    .search(['companyName', 'designation'])
-    .filter([
-      'searchTerm',
-      'sort',
-      'order',
-      'limit',
-      'page',
-      'fields',
-      'dateRange',
-    ])
-    .sort()
-    .paginate()
-    .fields();
-  const serviceResult = await services.modelQuery.exec();
+const getAllExperiences = async () => {
+  const services = await ExperienceModel.find().sort({ createdAt: -1 });
 
-  return serviceResult;
+  return services;
 };
 
 const getExperienceById = async (id: string) => {
