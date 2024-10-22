@@ -7,6 +7,7 @@ import { SkillRouter } from '../modules/skills/skills.routes';
 import { blogRouter } from '../modules/blog/blog.routes';
 import { ExperienceRouter } from '../modules/experience/experience.routes';
 import { PersonalInfoRouter } from '../modules/personalInfo/personalInfo.routes';
+import { EducationRouter } from '../modules/education/education.routes';
 
 const modulesRouters = [
   {
@@ -37,6 +38,10 @@ const modulesRouters = [
   {
     path: '/api/personalInfo',
     route: PersonalInfoRouter,
+  },
+  {
+    path: '/api/education',
+    route: EducationRouter,
   },
 ];
 

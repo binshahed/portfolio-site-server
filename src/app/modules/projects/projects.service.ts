@@ -1,11 +1,11 @@
 import AppError from '../../errors/AppError';
 import { TProject } from './projects.interface';
-import { ServiceModel } from './projects.model';
+import { ProjectModel } from './projects.model';
 
 import { QueryBuilder } from '../../builder/QueryBuilder';
 
 const createProject = async (payLoad: TProject) => {
-  const service = await ServiceModel.create(payLoad);
+  const service = await ProjectModel.create(payLoad);
   if (!service) {
     throw new AppError(400, 'Project is not created');
   }
@@ -14,7 +14,7 @@ const createProject = async (payLoad: TProject) => {
 
 const getAllProjects = async (query: Record<string, unknown>) => {
   const services = new QueryBuilder(
-    ServiceModel.find({ isDeleted: { $ne: true } }),
+    ProjectModel.find({ isDeleted: { $ne: true } }),
     query,
   )
     .search(['name', 'description'])
@@ -36,7 +36,7 @@ const getAllProjects = async (query: Record<string, unknown>) => {
 };
 const getAllProjectsAdmin = async (query: Record<string, unknown>) => {
   // Create the base query using the QueryBuilder
-  const services = new QueryBuilder(ServiceModel.find(), query)
+  const services = new QueryBuilder(ProjectModel.find(), query)
     .search(['name', 'description'])
     .filter([
       'searchTerm',
@@ -55,7 +55,7 @@ const getAllProjectsAdmin = async (query: Record<string, unknown>) => {
   const serviceResult = await services.modelQuery.exec();
 
   // Fetch the total count of documents without pagination filters
-  const totalCount = await ServiceModel.countDocuments(services.filterQuery);
+  const totalCount = await ProjectModel.countDocuments(services.filterQuery);
 
   // Extract pagination parameters from the query
   const page = query.page ? parseInt(query.page as string, 10) : 1;
@@ -75,7 +75,7 @@ const getAllProjectsAdmin = async (query: Record<string, unknown>) => {
 };
 
 const getProjectById = async (id: string) => {
-  const service = await ServiceModel.findById(id);
+  const service = await ProjectModel.findById(id);
 
   // checking is service is available
   if (!service) {
@@ -85,7 +85,7 @@ const getProjectById = async (id: string) => {
 };
 
 const updateProjectById = async (id: string, payLoad: Partial<TProject>) => {
-  const service = await ServiceModel.findByIdAndUpdate(id, payLoad, {
+  const service = await ProjectModel.findByIdAndUpdate(id, payLoad, {
     new: true,
   });
 
@@ -97,14 +97,14 @@ const updateProjectById = async (id: string, payLoad: Partial<TProject>) => {
 };
 
 const deleteProjectById = async (id: string) => {
-  const service = await ServiceModel.findById(id);
+  const service = await ProjectModel.findById(id);
 
   // checking is service is available
   if (!service) {
     throw new AppError(404, 'Project not found!');
   }
 
-  const result = await ServiceModel.findByIdAndUpdate(id, { isDeleted: true });
+  const result = await ProjectModel.findByIdAndDelete(id);
 
   return result;
 };

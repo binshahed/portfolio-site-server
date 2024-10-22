@@ -20,10 +20,7 @@ const updateBlog = async (
   payload: Partial<TBlog>,
 ) => {
   // Check if the blog exists and belongs to the user
-  const isBlogExist = await BlogModel.findOne({
-    _id: blogId,
-    author: user._id,
-  });
+  const isBlogExist = await BlogModel.findById(blogId);
 
   if (!isBlogExist) {
     throw new AppError(
@@ -34,7 +31,7 @@ const updateBlog = async (
 
   // Use a single query to find and update the blog
   const updatedBlog = await BlogModel.findOneAndUpdate(
-    { _id: blogId, author: user._id }, // Ensure the user owns the blog
+    { _id: blogId }, // Ensure the user owns the blog
     { ...payload }, // Update the blog with the payload data
     {
       new: true, // Return the updated document
@@ -63,20 +60,17 @@ const getAllBlogs = async (query: Record<string, unknown>) => {
     .sort()
     .fields();
 
-  return blogQuery.modelQuery.populate('author').populate('category').exec();
+  return blogQuery.modelQuery.exec();
 };
 
 const blogDetails = async (id: any) => {
-  const blog = await BlogModel.findById(id)
-    .populate('author')
-    .populate('likes')
-    .populate('dislikes');
+  const blog = await BlogModel.findById(id);
 
   return blog;
 };
 
-const deleteBlog = async (userId: Types.ObjectId, blogId: Types.ObjectId) => {
-  const blog = await BlogModel.findOne({ author: userId, _id: blogId });
+const deleteBlog = async (blogId: Types.ObjectId) => {
+  const blog = await BlogModel.findById(blogId);
   if (!blog) {
     throw new AppError(
       404,

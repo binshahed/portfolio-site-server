@@ -27,7 +27,6 @@ const loginUser = async (payload: { email: string; password: string }) => {
     delete userWithoutPassword.password;
     delete userWithoutPassword.__v;
   }
-  
 
   const token = jwt.sign(
     {

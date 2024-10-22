@@ -20,4 +20,4 @@ const serviceSchema = new Schema<TProject>(
   },
 );
 
-export const ServiceModel = model<TProject>('Project', serviceSchema);
+export const ProjectModel = model<TProject>('Project', serviceSchema);

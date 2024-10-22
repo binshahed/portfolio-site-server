@@ -65,7 +65,7 @@ const deleteExperienceById = async (id: string) => {
     throw new AppError(404, 'Experience not found!');
   }
 
-  const result = await ExperienceModel.findByIdAndUpdate(id, { isDeleted: true });
+  const result = await ExperienceModel.findByIdAndDelete(id);
 
   return result;
 };

@@ -66,7 +66,7 @@ const deleteSkillById = async (id: string) => {
     throw new AppError(404, 'Skill not found!');
   }
 
-  const result = await SkillModel.findByIdAndUpdate(id, { isDeleted: true });
+  const result = await SkillModel.findByIdAndDelete(id);
 
   return result;
 };
