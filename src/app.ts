@@ -9,7 +9,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://portfolio-shahed-dashboard-owdugt23u-binshaheds-projects.vercel.app',
+      'https://portfolio-shahed-dashboard.vercel.app',
       'https://binshahed-portfolio.vercel.app',
     ],
     credentials: true,
