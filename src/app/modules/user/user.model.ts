@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { TUser, TUserModel } from './user.interface';
-import config from '../../config';
+
 import bcrypt from 'bcrypt';
 
 // Define the schema for the User model with validation messages
@@ -53,7 +53,7 @@ const userSchema = new Schema<TUser, TUserModel>(
 userSchema.pre('save', async function (next) {
   const user = this as TUser;
   // hash password
-  user.password = await bcrypt.hash(user.password, Number(config.saltRound));
+  user.password = await bcrypt.hash(user.password, Number(10));
   next();
 });
 
