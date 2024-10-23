@@ -12,27 +12,10 @@ const createProject = async (payLoad: TProject) => {
   return service;
 };
 
-const getAllProjects = async (query: Record<string, unknown>) => {
-  const services = new QueryBuilder(
-    ProjectModel.find({ isDeleted: { $ne: true } }),
-    query,
-  )
-    .search(['name', 'description'])
-    .filter([
-      'searchTerm',
-      'sort',
-      'order',
-      'limit',
-      'page',
-      'fields',
-      'priceRange',
-    ])
-    .sort()
-    .paginate()
-    .fields();
-  const serviceResult = await services.modelQuery.exec();
+const getAllProjects = async () => {
+  const services = await ProjectModel.find().sort({ createdAt: -1 });
 
-  return serviceResult;
+  return services;
 };
 const getAllProjectsAdmin = async (query: Record<string, unknown>) => {
   // Create the base query using the QueryBuilder

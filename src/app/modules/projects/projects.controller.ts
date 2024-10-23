@@ -17,7 +17,7 @@ const createProject = catchAsync(async (req, res) => {
 
 // get all services
 const getAllProjects = catchAsync(async (req, res) => {
-  const result = await projectService.getAllProjects(req.query);
+  const result = await projectService.getAllProjects();
 
   sendResponse(res, {
     success: true,
